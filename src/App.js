@@ -11,25 +11,13 @@ function App() {
 
   function createLines() {
 
-
-    let step = 30;
-
-    for (let i = step; i <= size - step; i += step) {
-      var line = [];
-      for (let j = step; j <= size - step; j += step) {
-        let distanceToCenter = Math.abs((400+30) / 2)
-        let variance = Math.max(size / 2 - 50 - distanceToCenter, 0)
-        let random = Math.random() * variance / 2 * -1
-        let point = { x: j, y: i + random }
-        line.push(point)
-      }
-      lines.push(line)
-    }
+    
   }
 
   function createArt() {
-    let i;
-    let j;
+  }
+
+  useEffect(() => {
     context = canvasRef.current.getContext('2d')
 
     canvasRef.current.width = size;
@@ -37,30 +25,20 @@ function App() {
     context.scale(dpr, dpr);
     context.lineWidth = 2;
     
-    for (i = 5; i <= lines.length; i++) { 
-      context.beginPath()
-      context.moveTo(lines[5][0].x, lines[5][0].y)
+    context.beginPath()
+    context.moveTo(10, 100)
+    context.quadraticCurveTo(100, 100, 150, 50)
+    context.quadraticCurveTo(200, 110, 300, 100)
 
-      for (j = 0; j < lines[5].length - 2; j++) {
-        let xc = (lines[5][j].x + lines[5][j + 1].x) / 2;
-        let yc = (lines[5][j].y + lines[5][j + 1].y) / 2;
-        context.quadraticCurveTo(lines[5][j].x, lines[5][j].y, xc, yc);
-      }
+    context.moveTo(10, 150)
+    context.quadraticCurveTo(100, 200, 150, 100)
+    context.quadraticCurveTo(200, 210, 300, 150)
 
-      context.quadraticCurveTo(lines[5][j].x, lines[5][j].y, lines[5][j + 1].x, lines[5][j + 1].y);
-      context.save()
-      context.globalCompositionOperation = 'destination-out'
-      context.restore()
-      context.stroke()
-    }
-  }
-
-  useEffect(() => {
-    createLines()
-
-    setTimeout(function() {
-      createArt()
-    }, 4000);
+    context.save()
+    context.globalCompositionOperation = 'destination-out'
+    context.restore()
+    context.stroke()
+     
   }, [])
 
   return (
